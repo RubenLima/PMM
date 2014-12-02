@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,12 +28,14 @@ public class MyActivity extends Activity {
     EditText Etext;
     EditText Etext2;
     EditText Etext3;
-    TextView Text ;
-    TextView Text2 ;
-    TextView Text3 ;
+    TextView Text;
+    TextView Text2;
+    TextView Text3;
 
     final static String figuras[] = {"Circulo", "Rectangulo"};
-    private String figura=" ";
+    private String figura = " ";
+    private float radius, height, width = 0;
+    private Canvas clear;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +45,13 @@ public class MyActivity extends Activity {
         String mensaje;
         miSpinner = (Spinner) findViewById(R.id.spinner);
         miButton = (Button) findViewById(R.id.button);
-        Text=(TextView)findViewById(R.id.text1);
-        Text2=(TextView)findViewById(R.id.text2);
-        Text3=(TextView)findViewById(R.id.text3);
-        Etext=(EditText)findViewById(R.id.edittext1);
-        Etext2=(EditText)findViewById(R.id.edittext2);
-        Etext3=(EditText)findViewById(R.id.edittext3);
+        Text = (TextView) findViewById(R.id.text1);
+        Text2 = (TextView) findViewById(R.id.text2);
+        Text3 = (TextView) findViewById(R.id.text3);
+        Etext = (EditText) findViewById(R.id.edittext1);
+        Etext2 = (EditText) findViewById(R.id.edittext2);
+        Etext3 = (EditText) findViewById(R.id.edittext3);
+        final RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.dibujo);
 
         ArrayAdapter<String> miAdaptador = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, figuras);
         miAdaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -83,41 +87,76 @@ public class MyActivity extends Activity {
 
                 // meter los 3 campos invisibles
 
-               Etext.setVisibility(View.INVISIBLE);
-               Etext2.setVisibility(View.INVISIBLE);
-               Etext3.setVisibility(View.INVISIBLE);
+                Etext.setVisibility(View.INVISIBLE);
+                Etext2.setVisibility(View.INVISIBLE);
+                Etext3.setVisibility(View.INVISIBLE);
             }
+        });
+        miButton.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick (View v)
+            {
+                if(figura == "Rectangulo")
+                {
+                    if((Etext2.getText().toString().equals("")) || (Etext.getText().toString().equals("")))
+                    { showToast("Campos Vacios");}
+                    else
+                    {
+                        height = Float.valueOf(Etext2.getText().toString());
+                        width = Float.valueOf(Etext.getText().toString());
+                        View canvasView = new MyView(getBaseContext());
+                        relativeLayout.addView(canvasView);
+                    }
+
+                }
+                else if(figura == "Circulo")
+                {
+                    if(Etext3.getText().toString().equals(""))
+                    { showToast("Campo Vacio");}
+                    else
+                    {
+                        radius = Float.valueOf(Etext3.getText().toString());
+                        View canvasView = new MyView(getBaseContext());
+                        relativeLayout.addView(canvasView);
+                    }
+                }
+            }
+
         });
 
     }
 
-    public void showToast(String text) {Toast.makeText(this, text, Toast.LENGTH_SHORT).show();}
+    public void showToast(String text) {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
 
-    public class MyView extends View{
-        public MyView(Context context){
+    public class MyView extends View {
+        public MyView(Context context) {
             super(context);
         }
-    }
+
+
+
 
     protected void onDraw(Canvas canvas) {
         //Dentro de este método utilizamos los métodos para dibujar BitmapDrawable
-        Paint pincel = new Paint ();
+        Paint pincel = new Paint();
         pincel.setColor(Color.BLUE);
         pincel.setStrokeWidth(15);
         pincel.setStyle(Paint.Style.FILL_AND_STROKE);
         // ahora meter if
 
-        if (figura == "Rectangulo"){
-            canvas.drawRect(//datos
-                    ,pincel);
-        }
-        else{
-            canvas.drawCircle(//datos
-             ,pincel);
+        if (figura == "Rectangulo") {
+            canvas.drawRect((getWidth()/2)-(width/2), (getHeight()/2)-(height/2),
+                    (getWidth()/2)+(width/2), (getHeight()/2)+(height/2), pincel);
+        } else {
+            canvas.drawCircle((getWidth()/2), (getHeight()/2), radius, pincel);
         }
 
 
     }
+
+}
 
 
     @Override
