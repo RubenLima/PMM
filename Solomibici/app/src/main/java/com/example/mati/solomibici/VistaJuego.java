@@ -45,6 +45,14 @@ public class VistaJuego extends View {
         this.numCoches = numCoches;
     }
 
+    public Grafico getBici() {
+        return bici;
+    }
+
+    public void setBici(Grafico bici) {
+        this.bici = bici;
+    }
+
     public VistaJuego(Context contexto, AttributeSet atributos) {
 		super(contexto, atributos);
 		Drawable graficoBici, graficoCoche, graficoRueda;
@@ -69,7 +77,19 @@ public class VistaJuego extends View {
 		bici = new Grafico(this, graficoBici);
 	}
 
-	//Al comenzar y dibujar por primera vez la pantalla del juego
+    public float getAceleracionBici() {
+        return aceleracionBici;
+    }
+
+    public void setAceleracionBici(float aceleracionBici) {
+        this.aceleracionBici = aceleracionBici;
+    }
+
+    public static float getPasoAceleracionBici() {
+        return PASO_ACELERACION_BICI;
+    }
+
+    //Al comenzar y dibujar por primera vez la pantalla del juego
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
@@ -81,8 +101,15 @@ public class VistaJuego extends View {
 				coche.setPosY(Math.random()*(h-coche.getAlto()));
 			} while (coche.distancia(bici) < (w+h)/5);
 		}
-		
-	}
+
+
+
+        bici.setPosX(Math.random() * (w - bici.getAncho()));
+        bici.setPosY(Math.random()*(h-bici.getAlto()));
+        hiloJuego = new HiloJuego();
+        hiloJuego.start();
+
+    }
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -93,8 +120,72 @@ public class VistaJuego extends View {
 		}
 		
 	}
-	
-	
-	
+
+
+    public int getNumMotos() {
+        return numMotos;
+    }
+
+    public void setNumMotos(int numMotos) {
+        this.numMotos = numMotos;
+    }
+
+    public int getGiroBici() {
+        return giroBici;
+    }
+
+    public void setGiroBici(int giroBici) {
+        this.giroBici = giroBici;
+    }
+
+    public HiloJuego getHiloJuego() {
+        return hiloJuego;
+    }
+
+    public void setHiloJuego(HiloJuego hiloJuego) {
+        this.hiloJuego = hiloJuego;
+    }
+
+    protected synchronized void actualizaMovimiento() {
+        long ahora = System.currentTimeMillis();
+        // No hacemos nada si el período de proceso no se ha cumplido.
+        if (ultimoProceso + PERIODO_PROCESO > ahora) {
+            return;
+        }
+        // Para una ejecución en tiempo real calculamos retardo
+        double retardo = (ahora - ultimoProceso) / PERIODO_PROCESO;
+        // Actualizamos la posición de la bici
+        bici.setAngulo((int) (bici.getAngulo() + giroBici * retardo));
+        double nIncX = bici.getIncX() + aceleracionBici
+                * Math.cos(Math.toRadians(bici.getAngulo())) * retardo;
+        double nIncY = bici.getIncY() + aceleracionBici
+                * Math.sin(Math.toRadians(bici.getAngulo())) * retardo;
+        if (Grafico.distanciaE(0, 0, nIncX, nIncY) <= Grafico.getMaxVelocidad()) {
+            bici.setIncX(nIncX);
+            bici.setIncY(nIncY);
+        }
+        bici.incrementaPos();
+
+        //Movemos los coches
+        for (Grafico coche : Coches) {
+            coche.incrementaPos();
+        }
+        ultimoProceso = ahora;
+    }
+
+    private class HiloJuego extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                actualizaMovimiento();
+            }
+        }
+
+    }
+
+
+    public static int getPasoGiroBici() {
+        return PASO_GIRO_BICI;
+    }
 }
 

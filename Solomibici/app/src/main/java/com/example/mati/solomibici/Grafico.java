@@ -63,7 +63,91 @@ public class Grafico {
 		angulo += rotacion; // Actualizamos �ngulo
 	}
 
-	//Nos devuelve la distancia entre dos objetos Grafico
+    public double getPosX() {
+        return posX;
+    }
+
+    public void setPosX(double posX) {
+        this.posX = posX;
+    }
+
+    public static int getMaxVelocidad() {
+        return MAX_VELOCIDAD;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public void setView(View view) {
+        this.view = view;
+    }
+
+    public double getPosY() {
+        return posY;
+    }
+
+    public void setPosY(double posY) {
+        this.posY = posY;
+    }
+
+    public double getIncX() {
+        return incX;
+    }
+
+    public void setIncX(double incX) {
+        this.incX = incX;
+    }
+
+    public double getIncY() {
+        return incY;
+    }
+
+    public void setIncY(double incY) {
+        this.incY = incY;
+    }
+
+    public int getAngulo() {
+        return angulo;
+    }
+
+    public void setAngulo(int angulo) {
+        this.angulo = angulo;
+    }
+
+    public int getRotacion() {
+        return rotacion;
+    }
+
+    public void setRotacion(int rotacion) {
+        this.rotacion = rotacion;
+    }
+
+    public int getAncho() {
+        return ancho;
+    }
+
+    public void setAncho(int ancho) {
+        this.ancho = ancho;
+    }
+
+    public int getAlto() {
+        return alto;
+    }
+
+    public void setAlto(int alto) {
+        this.alto = alto;
+    }
+
+    public int getRadioColision() {
+        return radioColision;
+    }
+
+    public void setRadioColision(int radioColision) {
+        this.radioColision = radioColision;
+    }
+
+    //Nos devuelve la distancia entre dos objetos Grafico
 	public double distancia(Grafico g) {
 		return distanciaE(posX, posY, g.posX, g.posY);
 	}
@@ -77,4 +161,11 @@ public class Grafico {
 		return Math.sqrt((x - x2) * (x - x2) + (y - y2) * (y - y2));
 	}
 
+    public Drawable getDrawable() {
+        return drawable;
+    }
+
+    public void setDrawable(Drawable drawable) {
+        this.drawable = drawable;
+    }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,27 +31,27 @@ public class SoloBici extends Activity {
 
         //Boton y escuchador para la pantalla "Juego"
         bJuego = (Button) findViewById(R.id.Boton01);
-        bJuego.setOnClickListener(new OnClickListener(){
+        bJuego.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 lanzarJuego();
             }
         });
         //Boton y escuchador para la pantalla "Acerca de"
         bAcercaDe = (Button) findViewById(R.id.Boton03);
-        bAcercaDe.setOnClickListener(new OnClickListener(){
-            public void onClick(View view) {
-                lanzarAcercaDe();
-            }
-        });
+        // bAcercaDe.setOnClickListener(new OnClickListener(){
+        // public void onClick(View view) {
+        //   lanzarAcercaDe();
+        //   }
+        // });
 
         //Boton y escuchador para la pantalla "Salir"
         bSalir = (Button) findViewById(R.id.Boton04);
-        bSalir.setOnClickListener(new OnClickListener(){
+        bSalir.setOnClickListener(new OnClickListener() {
             public void onClick(View view) {
                 lanzarSalir();
             }
         });
-
+        }
     //Metodo que activa la pantalla Juego
 
     public void lanzarJuego(){
@@ -59,16 +60,22 @@ public class SoloBici extends Activity {
     }
 
     //Metodo que activa la pantalla AcercaDe
-    public void lanzarAcercaDe(){
-        Intent i = new Intent(this, AcercaDe.class);
-        startActivity(i);
-    }
+   // public void lanzarAcercaDe(){
+     //   Intent i = new Intent(this, AcercaDe.class);
+     //   startActivity(i);
+   // }
 
 
     //Metodo que activa la pantalla AcercaDe
     public void lanzarSalir(){
         finish();
     }
+
+
+     // aqui emter esto en primera linea :
+    //SharedPreferences pref =
+   // PreferenceManager.getDefaultSharedPreferences(
+   // MyActivity.this);
 
 
     }

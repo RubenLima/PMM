@@ -3,6 +3,12 @@
 
     <string name="app_name">Solomibici</string>
     <string name="hello_world">Hello world!</string>
+    <string name="tituloAplicacion">Juego Bici</string>
+    <string name="Jugar">Jugar</string>
+    <string name="Salir">Salir</string>
+    <string name="Acercade">Acercade</string>
     <string name="action_settings">Settings</string>
+    <string name="Configuracion">Configuracion</string>
+
 
 </resources>
