@@ -98,7 +98,39 @@ public class SoloBici extends Activity {
     }
 
 
-     // aqui emter esto en primera linea :
+    class HiloJuego extends Thread {
+        private boolean pausa,corriendo;
+        public synchronized void pausar() {
+            pausa = true;
+        }
+        public synchronized void reanudar() {
+            pausa = false;
+            notify();
+        }
+        public void detener() {
+            corriendo = false;
+            if (pausa) reanudar();
+        }
+        @Override    public void run() {
+            corriendo = true;
+            while (corriendo) {
+                actualizaMovimiento();
+                synchronized (this) {
+                    while (pausa) {
+                        try {
+                            wait();
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+            } // del while
+        } //del metodo run
+    } //de la clase HiloJuego
+
+
+
+
+        // aqui emter esto en primera linea :
     //SharedPreferences pref =
    // PreferenceManager.getDefaultSharedPreferences(
    // MyActivity.this);
