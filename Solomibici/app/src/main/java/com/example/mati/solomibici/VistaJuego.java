@@ -5,8 +5,11 @@ import java.util.Vector;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 
 public class VistaJuego extends View {
 	//	COCHES	//
@@ -92,14 +95,14 @@ public class VistaJuego extends View {
 			Coches.add(coche);
 		}
 		
-		//BICI
+		//BICI imagen
 		graficoBici = contexto.getResources().getDrawable(R.drawable.bici);
 		bici = new Grafico(this, graficoBici);
 
         // CONTROL DEL HILO DEL JUEGO
         corriendo = true;
 
-        // RUEDA
+        // RUEDA imagen
 
         graficoRueda = contexto.getResources().getDrawable(R.drawable.rueda);
 
@@ -152,7 +155,6 @@ public class VistaJuego extends View {
 		}
 		
 	}
-
 
     public int getNumMotos() {
         return numMotos;
@@ -272,8 +274,89 @@ public class VistaJuego extends View {
         return pulsacion;
     }
 
+    public static int getPERIODO_PROCESO() {
+        return PERIODO_PROCESO;
+    }
+
+    public static void setPERIODO_PROCESO(int PERIODO_PROCESO) {
+        VistaJuego.PERIODO_PROCESO = PERIODO_PROCESO;
+    }
+
+    public long getUltimoProceso() {
+        return ultimoProceso;
+    }
+
+    public void setUltimoProceso(long ultimoProceso) {
+        this.ultimoProceso = ultimoProceso;
+    }
+
+    public float getmX() {
+        return mX;
+    }
+
+    public void setmX(float mX) {
+        this.mX = mX;
+    }
+
+    public float getmY() {
+        return mY;
+    }
+
+    public void setmY(float mY) {
+        this.mY = mY;
+    }
+
+    public boolean isDisparo() {
+        return disparo;
+    }
+
+    public void setDisparo(boolean disparo) {
+        this.disparo = disparo;
+    }
+
+    public Grafico getRueda() {
+        return rueda;
+    }
+
+    public void setRueda(Grafico rueda) {
+        this.rueda = rueda;
+    }
+
+    public static int getVELOCIDAD_RUEDA() {
+        return VELOCIDAD_RUEDA;
+    }
+
+    public static void setVELOCIDAD_RUEDA(int VELOCIDAD_RUEDA) {
+        VistaJuego.VELOCIDAD_RUEDA = VELOCIDAD_RUEDA;
+    }
+
+    public boolean isRuedaActiva() {
+        return ruedaActiva;
+    }
+
+    public void setRuedaActiva(boolean ruedaActiva) {
+        this.ruedaActiva = ruedaActiva;
+    }
+
+    public int getDistanciaRueda() {
+        return distanciaRueda;
+    }
+
+    public void setDistanciaRueda(int distanciaRueda) {
+        this.distanciaRueda = distanciaRueda;
+    }
+
+    public boolean isCorriendo() {
+        return corriendo;
+    }
+
+    public boolean isPausa() {
+        return pausa;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent evento) {
+
         super.onTouchEvent(evento);
         //Obtenemos la posición de la pulsación
         float x=evento.getX();
@@ -366,5 +449,8 @@ public class VistaJuego extends View {
     public static int getPasoGiroBici() {
         return PASO_GIRO_BICI;
     }
+
+
+
 }
 
