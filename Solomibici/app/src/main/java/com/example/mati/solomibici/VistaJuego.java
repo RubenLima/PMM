@@ -96,7 +96,7 @@ public class VistaJuego extends View {
 		}
 		
 		//BICI imagen
-		graficoBici = contexto.getResources().getDrawable(R.drawable.bici);
+		graficoBici = contexto.getResources().getDrawable(R.drawable.ic_launcher);
 		bici = new Grafico(this, graficoBici);
 
         // CONTROL DEL HILO DEL JUEGO
@@ -155,6 +155,8 @@ public class VistaJuego extends View {
 		}
 		
 	}
+
+
 
     public int getNumMotos() {
         return numMotos;
@@ -432,18 +434,47 @@ public class VistaJuego extends View {
         this.pausa = pausa;
     }
 
-    private class HiloJuego extends Thread {
-        @Override
-        public void run() {
-            while (true) {
+    //private class HiloJuego extends Thread {
+      //  @Override
+      //  public void run() {
+       //     while (true) {
 
-                while (corriendo) {
-                    actualizaMovimiento();
-                }
-                }
+        //        while (corriendo) {
+          //          actualizaMovimiento();
+          //      }
+            //    }
+      //  }
+
+  //  }
+
+    class HiloJuego extends Thread {
+        private boolean pausa,corriendo;
+        public synchronized void pausar() {
+            pausa = true;
         }
-
-    }
+        public synchronized void reanudar() {
+            pausa = false;
+            notify();
+        }
+        public void detener() {
+            corriendo = false;
+            if (pausa) reanudar();
+        }
+        @Override    public void run() {
+            corriendo = true;
+            while (corriendo) {
+                actualizaMovimiento();
+                synchronized (this) {
+                    while (pausa) {
+                        try {
+                            wait();
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+            } // del while
+        } //del metodo run
+    } //de la clase HiloJuego
 
 
     public static int getPasoGiroBici() {

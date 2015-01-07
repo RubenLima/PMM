@@ -31,8 +31,13 @@ public class SoloBici extends Activity {
 
         //Boton y escuchador para la pantalla "Juego"
         bJuego = (Button) findViewById(R.id.Boton01);
+       // System.out.println("adsfg");
+       // Toast.makeText(getApplicationContext(),"OLA K ASE",Toast.LENGTH_SHORT).show();
         bJuego.setOnClickListener(new OnClickListener() {
+            @Override
             public void onClick(View view) {
+               // System.out.println("dentro");
+              //  Toast.makeText(getApplicationContext(),"OLA K ASE",Toast.LENGTH_SHORT).show();
                 lanzarJuego();
             }
         });
@@ -98,34 +103,7 @@ public class SoloBici extends Activity {
     }
 
 
-    class HiloJuego extends Thread {
-        private boolean pausa,corriendo;
-        public synchronized void pausar() {
-            pausa = true;
-        }
-        public synchronized void reanudar() {
-            pausa = false;
-            notify();
-        }
-        public void detener() {
-            corriendo = false;
-            if (pausa) reanudar();
-        }
-        @Override    public void run() {
-            corriendo = true;
-            while (corriendo) {
-                actualizaMovimiento();
-                synchronized (this) {
-                    while (pausa) {
-                        try {
-                            wait();
-                        } catch (Exception e) {
-                        }
-                    }
-                }
-            } // del while
-        } //del metodo run
-    } //de la clase HiloJuego
+
 
 
 
