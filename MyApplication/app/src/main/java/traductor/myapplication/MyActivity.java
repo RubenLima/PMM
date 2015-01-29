@@ -2,6 +2,7 @@ package traductor.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,13 +17,14 @@ public class MyActivity extends Activity {
     EditText Etext;
     Button boton;
     public static int COD_RESPONSE =0;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        Etext = (EditText) findViewById(R.id.editText);
+        boton = (Button) findViewById(R.id.button);
        // miButton = (Button) findViewById(R.id.button);
 
         boton.setOnClickListener(new View.OnClickListener()
@@ -32,9 +34,12 @@ public class MyActivity extends Activity {
                 Intent myIntent = new Intent(MyActivity.this, sonido.class);
                 Bundle myBundle = new Bundle();
                // Persona persona = personas.get(mySpinner.getSelectedItemPosition());
-               // myBundle.putSerializable("PROFILE", persona);
+                myBundle.putSerializable("PROFILE", "Hola");
                 myIntent.putExtras(myBundle);
                 startActivityForResult(myIntent, COD_RESPONSE); // CREATED ProfileActivity in AndroidManifest.xml
+                mp = MediaPlayer.create(MyActivity.this, R.raw.explosion);
+                mp.start();
+
             }
         });
 

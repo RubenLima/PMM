@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".sonido"
+            android:label="Traductor español - Kito" >
+
+        </activity>
     </application>
 
 </manifest>

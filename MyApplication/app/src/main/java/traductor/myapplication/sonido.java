@@ -14,25 +14,25 @@ import android.widget.Button;
  */
 public class sonido extends Activity {
 
-    public class Audio{
+   // public class Audio{
 
-        MediaPlayer mp;
+      //  MediaPlayer mp;
 
-        public void playClick(Context context){
-            mp = MediaPlayer.create(context, R.raw.explosion);
-            mp.start();
-        }
-    }
+      //  public void playClick(Context context){
+      //      mp = MediaPlayer.create(context, R.raw.explosion);
+      //      mp.start();
+      //  }
+    //}
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sonido);
-        audio = new Audio();
-        audio.playClick(this);
+        //audio = new Audio();
+       // audio.playClick(this);
 
-        Audio audio = new Audio(YourActivity.getApplicationContext());
-        audio.playClick();
+       // Audio audio = new Audio(MyActivity.getApplicationContext());
+       // audio.playClick();
 
 
      //   MediaPlayer miMediaPlayer =
@@ -46,7 +46,7 @@ public class sonido extends Activity {
             {
                 Intent retIntent = new Intent();
                 Bundle retBundle = new Bundle();
-                String retText = "Devuelto con éxito";
+                String retText = "¿Otra traduccion?";
                 retBundle.putString("RETURNED", retText);
                 retIntent.putExtras(retBundle);
                 setResult(RESULT_OK, retIntent);
